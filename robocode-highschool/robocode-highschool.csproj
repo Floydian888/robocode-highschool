@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C785DD26-CEAE-4845-9302-04521AC245C3}</ProjectGuid>
+    <ProjectGuid>{66952F5A-FE5C-483F-BA45-E55B2A2C2F3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>robocode_highschool</RootNamespace>
