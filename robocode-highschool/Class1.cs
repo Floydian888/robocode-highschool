@@ -13,39 +13,27 @@ namespace robocode_highschool
         // Your Run method must be public, is void, and must override the Run() method from the super class
         public override void Run()
         {
-            TurnRadarRight(360); //lata radarem jak szalony
+           // TurnRadarRight(360); //lata radarem jak szalony
             while (true)
             {
-                
+                driving();
+                TurnRadarRight(360);
             }
         }
 
 
         public void driving() // jezdzenie 
         {
-            for (int i = 0; i < 12; i++) // takie koleczka, z wycofka co 360 stopni
-            {
                 Ahead(100);
                 TurnLeft(30);
                 Back(50);
-            }
         }
 
         public void shoot(double distance) //pyk! strzelanie naszym robotem z rozna sila
         {
            // distance okresla odleglosc robota od zeskanowanego przeciwnika
-            if (distance > 200 ||  Energy < 20) // gdy mamy malo energii lub przeciwnik jest daleko, strzelamy z mala sila (wtedy pocisk ksztuje malo energii, zadaje malo dmg, ale szybko leci)
-                Fire(1); 
-            else
-                if (distance < 50) // jak przeciwnik jest jakos sensownie blisko i mamy  to strzelamy z wieksza sila 
-                     Fire(2);
-                else
-                    if (distance < 30) // a jak jest bardzo blisko, to nawalamy z calej pary
-                        Fire(3);
+            Fire(3 - distance/250);
          }
-
-
-         // Robot event handler, when the robot sees another robot
          public override void OnScannedRobot(ScannedRobotEvent e)
          {
              TurnGunRight(Heading - GunHeading + e.Bearing);//naprowadzanie
@@ -55,21 +43,21 @@ namespace robocode_highschool
 
          public override void OnHitByBullet(HitByBulletEvent e)
          {
-             TurnGunRight(Heading - GunHeading + e.Bearing);//naprowadzanie
+             TurnGunRight(Heading - GunHeading + e.Bearing); //naprowadzanie
              TurnRadarRight(Heading - GunHeading + e.Bearing); //tu próba ograniczenia latania radarem
-             shoot(201);//strzela jak coś znajdzie, ale poniewaz event HitByBullet nie ma pola Distance, strzelam z sila 1 
+             Fire(1);//strzela jak coś znajdzie, ale poniewaz event HitByBullet nie ma pola Distance, strzelam z sila 1 
          }
 
-         public void OnHitWall(HitWallEvent w)
+         public override void OnHitWall(HitWallEvent w)
          {
-             TurnLeft(180); // nawrotka
-             Ahead(500); // robimy sobie miejsce zeby moc dalej krecic baczki
+             TurnLeft(160); // nawrotka
+             Ahead(250); // robimy sobie miejsce zeby moc dalej krecic baczki
          }
 
-         public void OnHitRobot(HitRobotEvent r) // taranujemy przeciwnika, warto zauwazyc, ze moze to oznaczac rowniez obrone przed taranowaniem (ucieczke)
+         public override void OnHitRobot(HitRobotEvent r) // taranujemy przeciwnika, warto zauwazyc, ze moze to oznaczac rowniez obrone przed taranowaniem (ucieczke)
          {
              Back(200); // cofamy
-             Ahead(500); // i wjezdzamy w przeciwnika jeszcze raz
+             TurnLeft(90); // i wjezdzamy w przeciwnika jeszcze raz
          }
    }
 }
